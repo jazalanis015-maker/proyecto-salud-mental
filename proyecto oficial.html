@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Salud Mental</title>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root{
+            --accent-1: #145da0;
+            --accent-2: #0b3c68;
+            --card-back: #1f6aa5;
+            --bg: #d4e4f7;
+        }
+        html,body { height:100%; margin:0; background:var(--bg); font-family: Arial, sans-serif; }
+
+        .pantalla { display:none; width:100%; min-height:100vh; }
+        .mostrar { display:block !important; }
+
+        #inicio {
+        height: 100vh;
+        background: url("Captura de pantalla 2025-12-03 024504.png");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        }
+
+        /* Oscurecer la imagen para que el texto se lea */
+        #inicio::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+        }
+
+        /* Asegurar que el contenido se vea encima de la imagen */
+        #inicio .container {
+            position: relative;
+        z-index: 2;
+        }
+        #btnComenzar{
+            padding:14px 36px;
+            font-size:20px;
+            background:linear-gradient(135deg,#4CAF50,#1f8a3f);
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            color:white;
+        }
+
+        /* TARJETAS */
+        .tarjeta { perspective:1000px; margin-bottom:40px; }
+        .tarjeta-inner{
+            width:100%; height:300px;
+            transform-style:preserve-3d;
+            transition:0.8s;
+        }
+        .tarjeta:hover .tarjeta-inner{
+            transform:rotateY(180deg);
+        }
+        .tarjeta-front,.tarjeta-back{
+            position:absolute;
+            width:100%; height:100%;
+            backface-visibility:hidden;
+            border-radius:15px;
+            overflow:hidden;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            box-shadow:0 0 15px rgba(0,0,0,0.25);
+            text-align:center;
+            padding:20px;
+        }
+        .tarjeta-front img{
+            width:100%; height:100%; object-fit:cover;
+        }
+        .tarjeta-back{
+            background:linear-gradient(180deg,var(--card-back),var(--accent-2));
+            transform:rotateY(180deg);
+            color:white;
+            text-align:justify;
+        }
+
+        /* ENFERMEDADES */
+        .enfermedad-card{
+            border-radius:12px;
+            box-shadow:0 0 10px rgba(0,0,0,0.15);
+            background:white;
+            padding:15px;
+            cursor:pointer;
+            transition:0.3s;
+            margin-bottom:20px;
+        
+        }
+       .enfermedad-card {
+        padding: 25px;
+        border-radius: 15px;
+        background: #ffffff;
+        box-shadow: 0 0 15px rgba(0,0,0,0.25);
+        margin-bottom: 20px;
+        text-align: center;
+        cursor: pointer;
+
+        /* MÁS ANCHAS A LO LARGO DE LA PANTALLA */
+        width: 100%;
+        max-width: 700px;   /* antes 460px → ahora MUCHO más ancho */
+        min-height: 650px;  /* un poco más alto para que se vea equilibrado */
+        }
+
+        .enfermedad-img {
+            width: 100%;
+            height: 450px;      /* imagen más grande y proporcional */
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        #listaEnfermedadesReal {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* centra las tarjetas */
+        gap: 20px; /* separación entre tarjetas */
+        }
+
+        .detalle{
+            max-width:900px;
+            margin:30px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 6px 20px rgba(0,0,0,0.1);
+        }
+        /* FLECHAS DEL CARRUSEL MÁS GRANDES Y VISIBLES */
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(1);          /* Ícono blanco */
+            width: 50px !important;     /* Más grandes */
+            height: 50px !important;
+        }
+
+        /* Fondo circular semitransparente detrás de la flecha */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 8%;
+        }
+
+        .carousel-control-prev span,
+        .carousel-control-next span {
+            background-color: rgba(0, 0, 0, 0.45);  /* Fondo oscuro */
+            padding: 18px;                          /* Tamaño del círculo */
+            border-radius: 50%;                    /* Redondo */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="inicio" class="pantalla mostrar">
+
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center" 
+        style="height: 90vh; position:relative; z-index:2;">
+
+        <div class="p-5 rounded shadow-lg" 
+             style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(6px); max-width: 800px;">
+
+            <h1 class="fw-bold mb-3" style="font-size: 3rem; color: #007bff;">
+                Salud Mental
+            </h1>
+
+            <p class="lead" style="font-size: 1.3rem;">
+                Explora, aprende y comprende los trastornos mentales más importantes.
+            </p>
+
+            <p style="font-size: 1.1rem; color: #555;">
+                Este programa te permitirá conocer más sobre TEPT, TLP, Ansiedad, Depresión,
+                Trastorno Bipolar, Esquizofrenia, TDAH, Conducta y más.
+            </p>
+
+            <button id="btnComenzar" class="btn btn-primary btn-lg mt-4">
+                Comenzar
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- INFORMACIÓN -->
+     <main id="info" class="pantalla" role="main" aria-labelledby="info-titulo">
+        <h2 id="info-titulo">Información sobre la Salud Mental</h2>
+
+        <div class="container">
+            <div class="row">
+
+                <!-- TARJETA 1 -->
+                <div class="col-md-4 tarjeta">
+                    <div class="tarjeta-inner" tabindex="0" aria-hidden="false">
+                        <div class="tarjeta-front">
+                            <img src="Captura de pantalla 2025-12-02 085520.png" alt="Qué es la salud mental">
+                        </div>
+                        <div class="tarjeta-back">
+                            La salud mental es un aspecto fundamental del bienestar general y se refiere al equilibrio emocional, 
+                            psicológico y social que permite a las personas desenvolverse adecuadamente en su vida diaria. 
+                            Afecta la forma en que pensamos, sentimos, tomamos decisiones y nos relacionamos con los demás. 
+                            Cuidarla es esencial para enfrentar los retos de la vida y mantener relaciones sanas.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TARJETA 2 -->
+                <div class="col-md-4 tarjeta">
+                    <div class="tarjeta-inner" tabindex="0">
+                        <div class="tarjeta-front">
+                            <img src="Captura de pantalla 2025-12-02 085508.png" alt="Importancia de la salud mental">
+                        </div>
+                        <div class="tarjeta-back">
+                            La salud mental es un aspecto crucial de nuestras vidas que merece la misma atención y cuidado que la salud física. 
+                            Entender qué es la salud mental, cómo afectan las enfermedades mentales y qué factores influyen en ella nos permite 
+                            tomar medidas para fortalecerla.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TARJETA 3 -->
+                <div class="col-md-4 tarjeta">
+                    <div class="tarjeta-inner" tabindex="0">
+                        <div class="tarjeta-front">
+                            <img src="Captura de pantalla 2025-12-02 085456.png" alt="Sintomas que indican una buena salud emocional">
+                        </div>
+                        <div class="tarjeta-back">
+                            Reconocer los síntomas de una mala salud mental es esencial para actuar a tiempo, pues pueden manifestarse 
+                            como cambios significativos en el estado de ánimo, dificultades para concentrarse o tomar decisiones, 
+                            alteraciones en los hábitos de sueño y alimentación, aislamiento social, pérdida de interés en actividades 
+                            antes placenteras y, en casos más graves, pensamientos suicidas o autolesiones; aunque estos signos varían según 
+                            la persona y el trastorno, si se presentan varios de ellos es fundamental buscar ayuda profesional.
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TARJETA 4 -->
+                <div class="col-md-4 tarjeta">
+                    <div class="tarjeta-inner" tabindex="0">
+                        <div class="tarjeta-front">
+                            <img src="Captura de pantalla 2025-12-03 025432.png" alt="¿Qué puede afectar mi salud mental?">
+                        </div>
+                        <div class="tarjeta-back">
+                            La salud mental puede verse afectada por factores internos y externos como el estrés prolongado, 
+                            los problemas familiares o de pareja, los cambios importantes, los factores biológicos, 
+                            el aislamiento social y las experiencias traumáticas; reconocer estos elementos ayuda a prevenir
+                             dificultades y a buscar apoyo profesional a tiempo.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TARJETA 5 -->
+                <div class="col-md-4 tarjeta">
+                    <div class="tarjeta-inner" tabindex="0">
+                        <div class="tarjeta-front">
+                            <img src="Captura de pantalla 2025-12-03 025540.png" alt="¿Por que es importante?">
+                        </div>
+                        <div class="tarjeta-back">
+                            La salud mental es fundamental porque influye en el bienestar personal, la productividad,
+                             el éxito académico y laboral, fortalece las relaciones interpersonales, ayuda a prevenir trastornos,
+                              fomenta la resiliencia frente a dificultades y contribuye a una sociedad más sana y cohesionada, 
+                              beneficiando tanto a las personas como a su entorno.
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TARJETA 6 -->
+                <div class="col-md-4 tarjeta">
+                    <div class="tarjeta-inner" tabindex="0">
+                        <div class="tarjeta-front">
+                            <img src="Captura de pantalla 2025-12-02 203521.png" alt="Donde puedo pedir ayuda?">
+                        </div>
+                        <div class="tarjeta-back">
+                          Si necesitas apoyo para tu salud mental, puedes acudir a profesionales como psicólogos y psiquiatras,
+                           líneas de ayuda anónimas o grupos de apoyo; entender la salud mental y buscar ayuda cuando 
+                           sea necesario es un acto valiente y esencial, recordando que este contenido es informativo 
+                           y no reemplaza la orientación de un especialista.
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    
+            <button id="btnEnfermedades" class="btn btn-primary mt-3">Ver enfermedades mentales</button>
+
+            <button id="btnCarrusel" class="btn btn-warning mt-3 ms-2">Ver carrusel de imágenes</button>
+
+            <button id="btnCuestionario" class="btn btn-success mt-3 ms-2">Contestar cuestionario</button>
+        </div>
+    </main>
+
+    <!-- LISTA DE ENFERMEDADES -->
+    <div id="pantallaEnfermedades" class="pantalla">
+        <div class="container mt-4">
+            <h2 class="text-center">Enfermedades Mentales</h2>
+
+            <div id="listaEnfermedadesReal" class="mt-4">
+
+                <!-- 1 Depresión -->
+                <div class="enfermedad-card" data-target="pant_Depresion" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 020304.png" alt="Transtorno de Estrés Postraumatico(TEPT)">
+                    <h4>Transtorno de Estrés Postraumatico(TEPT)</h4>
+                    <p class="enfermedad-info">Aparece después de vivir algo muy traumático. La persona revive el evento y evita cosas que se lo recuerdan.</p>
+                </div>
+
+                <!-- 2 Ansiedad -->
+                <div class="enfermedad-card" data-target="pant_Ansiedad" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 014148.png" alt="Transtorno Limite de la personalidad(TLP)">
+                    <h4>Transtorno Limite de la personalidad(TLP)</h4>
+                    <p class="enfermedad-info">Provoca emociones muy fuertes y cambios bruscos. Las relaciones suelen ser inestables.</p>
+                </div>
+
+                <!-- 3 Esquizofrenia -->
+                <div class="enfermedad-card" data-target="pant_Esquizofrenia" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 020445.png" alt="Transtorno de Panico">
+                    <h4>Transtorno de Panico</h4>
+                    <p class="enfermedad-info">Son ataques repentinos de miedo intenso, con palpitaciones y sensación de perder el control.</p>
+                </div>
+
+                <!-- 4 Trastorno Bipolar -->
+                <div class="enfermedad-card" data-target="pant_Bipolar" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 014321.png" alt="Trastorno Bipolar">
+                    <h4>Trastorno Bipolar</h4>
+                    <p class="enfermedad-info">Alterna entre mucha energía (manía) y tristeza profunda (depresión). Afecta la vida diaria.</p>
+                </div>
+
+                <!-- 5 TOC -->
+                <div class="enfermedad-card" data-target="pant_TOC" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 014527.png" alt="Esquizofrenia">
+                    <h4>Esquizofrenia</h4>
+                    <p class="enfermedad-info">Afecta cómo la persona piensa y percibe la realidad. Puede haber alucinaciones e ideas extrañas</p>
+                </div>
+
+                <!-- 6 TEPT -->
+                <div class="enfermedad-card" data-target="pant_TEPT" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 014619.png" alt="Transtorno Depresivo Mayor">
+                    <h4>Transtorno Depresivo Mayor</h4>
+                    <p class="enfermedad-info">Causa tristeza profunda y pérdida de interés. Afecta el sueño, energía y motivación.</p>
+                </div>
+
+                <!-- 7 Personalidad Límite -->
+                <div class="enfermedad-card" data-target="pant_Borderline" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 014739.png" alt="Ansiedad">
+                    <h4>Ansiedad</h4>
+                    <p class="enfermedad-info">Es preocupación constante sin un peligro real. Genera tensión y malestar físico.</p>
+                </div>
+
+                <!-- 8 Fobia Social -->
+                <div class="enfermedad-card" data-target="pant_Fobia" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 014831.png" alt="Trnastorno Obsesivo-Compulsivo(TOC)">
+                    <h4>Transtorno Obsesivo-Compulsivo(TOC)</h4>
+                    <p class="enfermedad-info">Incluye pensamientos repetitivos que causan ansiedad y rituales para intentar aliviarla.</p>
+                </div>
+
+                <!-- 9 Trastornos Alimentarios -->
+                <div class="enfermedad-card" data-target="pant_Alimentarios" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 015004.png" alt="Tranastorno de conducta">
+                    <h4>Transtorno de conducta</h4>
+                    <p class="enfermedad-info">Es un problema en el que la persona muestra comportamientos agresivos o que rompen reglas de forma repetida. 
+                        Puede afectar la convivencia en casa, escuela o con otras personas.</p>
+                </div>
+
+                <!-- 10 TDAH -->
+                <div class="enfermedad-card" data-target="pant_TDAH" role="button" tabindex="0" aria-pressed="false">
+                    <img class="enfermedad-img" src="Captura de pantalla 2025-12-03 015044.png" alt="Transtorno  de Deficit de Atencion e Hiperactividad(TDAH)">
+                    <h4>Transtorno  de Deficit de Atencion e Hiperactividad(TDAH)</h4>
+                    <p class="enfermedad-info">Es una condición que causa dificultad para concentrarse, impulsividad y/o mucha actividad física. Afecta el rendimiento escolar y la organización diaria.</p>
+                </div>
+
+            </div>
+
+            <button class="btn btn-secondary mt-3" onclick="volver('info')">Volver</button>
+        </div>
+    </div>
+
+    <!-- PANTALLAS DETALLADAS -->
+<div id="pant_Depresion" class="pantalla">
+<div class="detalle">
+     <h2>Trastorno de Estrés Postraumático (TEPT)</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 233957.png" 
+        alt="TEPT" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El Trastorno de Estrés Postraumático (TEPT) aparece después de un evento traumático que generó miedo extremo, horror o sensación de peligro. Causa recuerdos intrusivos, pesadillas, hipervigilancia, evitación y cambios emocionales intensos que limitan la vida diaria.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>TEPT agudo (menos de 3 meses).</li>
+        <li>TEPT crónico (más de 3 meses).</li>
+        <li>TEPT de inicio demorado (aparece meses o años después).</li>
+        <li>TEPT complejo (traumas repetidos o prolongados).</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Recuerdos intrusivos, flashbacks y pesadillas.</li>
+        <li>Evitación de lugares, personas o situaciones relacionadas al trauma.</li>
+        <li>Hipervigilancia, sobresaltos, irritabilidad o enojo.</li>
+        <li>Dificultad para dormir, ansiedad y problemas de concentración.</li>
+        <li>Sentimiento de culpa, vergüenza o miedo constante.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Exposición directa a un trauma fuerte.</li>
+        <li>Abuso físico, emocional o sexual.</li>
+        <li>Desastres naturales, accidentes graves o violencia.</li>
+        <li>Poca red de apoyo después del evento.</li>
+        <li>Antecedentes de ansiedad o depresión.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se realiza por un profesional mediante entrevistas clínicas, cuestionarios específicos y análisis de síntomas presentes durante 1 mes o más, descartando otras causas médicas o psicológicas.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia cognitivo-conductual (TCC) para trauma.</li>
+        <li>EMDR (Desensibilización y Reprocesamiento por Movimientos Oculares).</li>
+        <li>Exposición prolongada para reducir el miedo asociado al recuerdo.</li>
+        <li>Medicamentos como antidepresivos para síntomas severos.</li>
+        <li>Técnicas de respiración, grounding y manejo del estrés.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Practicar respiración profunda y mindfulness.</li>
+        <li>Mantener rutinas estables de sueño y actividades.</li>
+        <li>Evitar aislamiento social y buscar apoyo afectivo.</li>
+        <li>Escritura terapéutica para procesar emociones.</li>
+    </ul>
+
+    <!-- ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ -->
+    <!--     APARTADOS QUE ME PEDISTE     -->
+    <!-- ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ -->
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 01.28.38_9f7ef010.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 5.08.46 PM.jpeg" 
+        alt="Cartel informativo TEPT" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 11.36.39 PM.mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+
+                
+<div id="pant_Ansiedad" class="pantalla">
+<div class="detalle">
+    
+     <h2>Trastorno Límite de la Personalidad (TLP)</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234108.png" 
+        alt="Trastorno Límite de la Personalidad" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El Trastorno Límite de la Personalidad (TLP) es una condición emocional caracterizada por una gran inestabilidad en las relaciones, la autoimagen y las emociones. Las personas con TLP pueden sentir emociones muy intensas, cambios de humor bruscos, miedo profundo al abandono y conductas impulsivas que afectan su vida diaria.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>TLP impulsivo (se centra en la impulsividad y enojo).</li>
+        <li>TLP límite clásico (emociones intensas y miedo al abandono).</li>
+        <li>TLP inhibido (más control emocional pero fuerte dolor interno).</li>
+        <li>TLP emocionalmente inestable (cambios de ánimo extremos).</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Emociones intensas y cambios bruscos de humor.</li>
+        <li>Miedo extremo al abandono (real o imaginado).</li>
+        <li>Relaciones intensas pero inestables.</li>
+        <li>Autoimagen negativa o cambiante.</li>
+        <li>Impulsividad (gastos, comida, sexo, sustancias).</li>
+        <li>Sentimientos de vacío constante.</li>
+        <li>Episodios de ira intensa o dificultad para controlarla.</li>
+        <li>Conductas autolesivas en casos graves.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Experiencias traumáticas en la infancia.</li>
+        <li>Ambientes familiares inestables.</li>
+        <li>Factores genéticos y biológicos.</li>
+        <li>Alta sensibilidad emocional desde la niñez.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>El diagnóstico lo realiza un profesional mediante entrevistas clínicas y la evaluación de patrones emocionales, conductuales y relacionales presentes desde la adolescencia o adultez temprana.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia Dialéctico-Conductual (TDC), la más efectiva.</li>
+        <li>Terapia centrada en mentalización.</li>
+        <li>Terapia cognitivo-conductual para impulsividad.</li>
+        <li>Medicamentos para ansiedad o depresión asociadas.</li>
+        <li>Plan de crisis y autocontrol emocional.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Identificar detonantes emocionales.</li>
+        <li>Uso de técnicas de respiración y mindfulness.</li>
+        <li>Crear rutinas estables.</li>
+        <li>Habilidades para regular emociones intensas.</li>
+        <li>Buscar redes de apoyo confiables.</li>
+    </ul>
+
+    <!-- ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ -->
+    <!--     APARTADOS QUE PEDISTE     -->
+    <!-- ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ -->
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 00.43.28_05161509.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 8.33.45 PM.jpeg" 
+        alt="Cartel informativo TLP" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 11.01.26 PM.mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+<div id="pant_Esquizofrenia" class="pantalla">
+<div class="detalle">
+    <h2>Trastorno de Pánico</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 233617.png" 
+        alt="Trastorno de Pánico" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El trastorno de pánico se caracteriza por ataques repentinos de miedo intenso acompañados de síntomas físicos como palpitaciones, temblores, mareos, falta de aire y sensación de perder el control. Estos episodios ocurren sin causa aparente y generan un fuerte miedo a que vuelvan a repetirse.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>Ataques de pánico inesperados (sin motivo aparente).</li>
+        <li>Ataques situacionales (detonados por un estímulo).</li>
+        <li>Ataques predispuestos (más probables en ciertas situaciones).</li>
+        <li>Trastorno de pánico con agorafobia.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Palpitaciones o sensación de “corazón acelerado”.</li>
+        <li>Dificultad para respirar o sensación de ahogo.</li>
+        <li>Mareos, temblores o sudoración.</li>
+        <li>Dolor o presión en el pecho.</li>
+        <li>Entumecimiento en manos o rostro.</li>
+        <li>Sensación de desmayo o pérdida de control.</li>
+        <li>Miedo intenso a morir, desmayarse o volverse loco.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Estrés crónico o situaciones traumáticas.</li>
+        <li>Predisposición genética.</li>
+        <li>Cambios en serotonina y noradrenalina.</li>
+        <li>Consumo de cafeína, alcohol o sustancias.</li>
+        <li>Problemas de sueño.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se basa en ataques repetidos e inesperados acompañados de cambios en la conducta durante un mes o más. Incluye entrevistas clínicas, cuestionarios y evaluación física para descartar problemas cardíacos o respiratorios.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia cognitivo-conductual (TCC) especializada en pánico.</li>
+        <li>Técnicas de respiración y manejo de ansiedad.</li>
+        <li>Exposición interoceptiva para enfrentar sensaciones físicas.</li>
+        <li>Antidepresivos ISRS y ansiolíticos breves.</li>
+        <li>Modificación de hábitos (reducir cafeína, mejorar sueño).</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Respiración lenta y profunda.</li>
+        <li>Ejercicio regular.</li>
+        <li>Evitar bebidas energéticas o estimulantes.</li>
+        <li>Entrenamiento en mindfulness y grounding.</li>
+        <li>Identificar detonantes emocionales.</li>
+    </ul>
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 00.45.19_947d8865.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 8.31.18 PM.jpeg" 
+        alt="Cartel informativo" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="ElevenLabs_Untitled_project (1).mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+<div id="pant_Bipolar" class="pantalla">
+<div class="detalle">
+    <h2>Trastorno Bipolar</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234523.png" 
+        alt="Trastorno Bipolar" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El trastorno bipolar provoca cambios extremos en el estado de ánimo, pasando de episodios de manía (energía alta, impulsividad, euforia) a episodios de depresión profunda. Estos cambios afectan la conducta, el pensamiento y la capacidad para realizar actividades diarias.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>Bipolar I (episodios de manía severa).</li>
+        <li>Bipolar II (hipomanía + depresión severa).</li>
+        <li>Ciclotimia (cambios leves pero continuos).</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li><strong>Manía:</strong> energía extrema, menos sueño, impulsividad, habla rápida.</li>
+        <li><strong>Depresión:</strong> tristeza profunda, cansancio, desesperanza.</li>
+        <li>Ideas grandiosas o desesperación profunda.</li>
+        <li>Dificultad para concentrarse.</li>
+        <li>Cambios en el sueño y apetito.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Predisposición genética.</li>
+        <li>Alteraciones en dopamina y serotonina.</li>
+        <li>Estrés intenso o eventos traumáticos.</li>
+        <li>Consumo de sustancias.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se realiza mediante entrevistas clínicas profundas, historial de episodios y evaluación del estado de ánimo a lo largo del tiempo. También se descartan otras causas médicas.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Estabilizadores del ánimo (litio, lamotrigina).</li>
+        <li>Antipsicóticos atípicos.</li>
+        <li>Terapia cognitivo-conductual.</li>
+        <li>Rutinas de sueño muy estrictas.</li>
+        <li>Evitar alcohol y drogas.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Rutinas diarias estables.</li>
+        <li>Registro de cambios de ánimo.</li>
+        <li>Reducción de estrés.</li>
+        <li>Apoyo familiar.</li>
+    </ul>
+
+    <hr>
+
+     <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 01.01.55_68f9e856.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 8.49.32 PM.jpeg" 
+        alt="Cartel informativo" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 10.51.27 PM.mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+        
+    
+
+<div id="pant_TOC" class="pantalla">
+<div class="detalle">
+        <h2>Esquizofrenia</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234625.png" 
+        alt="Esquizofrenia" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    La esquizofrenia es un trastorno mental grave que afecta la forma en que la persona piensa, siente y percibe la realidad. Puede incluir alucinaciones, delirios, pensamiento desorganizado, dificultades cognitivas y cambios significativos en la conducta.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>Esquizofrenia paranoide (delirios de persecución).</li>
+        <li>Esquizofrenia desorganizada.</li>
+        <li>Esquizofrenia catatónica.</li>
+        <li>Esquizofrenia residual.</li>
+        <li>Esquizofrenia indiferenciada.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Alucinaciones (principalmente auditivas).</li>
+        <li>Delirios (ideas falsas firmemente creídas).</li>
+        <li>Pensamiento desorganizado.</li>
+        <li>Aplanamiento afectivo (emociones reducidas).</li>
+        <li>Aislamiento social.</li>
+        <li>Problemas de concentración o memoria.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Genética.</li>
+        <li>Desequilibrios en dopamina.</li>
+        <li>Eventos traumáticos o estrés extremo.</li>
+        <li>Complicaciones durante el embarazo.</li>
+        <li>Uso de drogas psicoactivas.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se basa en la presencia de síntomas durante seis meses o más, entrevistas clínicas, evaluación del pensamiento, historia familiar y estudios complementarios para descartar otras causas.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Antipsicóticos atípicos (quetiapina, risperidona, olanzapina).</li>
+        <li>Terapia cognitivo-conductual para psicosis.</li>
+        <li>Rehabilitación psicosocial.</li>
+        <li>Entrenamiento en habilidades sociales.</li>
+        <li>Apoyo familiar estructurado.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Rutinas estables y organización diaria.</li>
+        <li>Adherencia estricta al tratamiento.</li>
+        <li>Evitar sustancias psicoactivas.</li>
+        <li>Red de apoyo emocional sólida.</li>
+        <li>Ejercicio regular y sueño adecuado.</li>
+    </ul>
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 01.10.30_5aa29185.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 5.08.44 PM.jpeg" 
+        alt="Cartel informativo esquizofrenia" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-03 at 12.43.00 AM.mpeg" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+
+    <div id="pant_TEPT" class="pantalla">
+    <div class="detalle">
+        
+         <h2>Trastorno Depresivo Mayor</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234717.png" 
+        alt="Trastorno Depresivo Mayor" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    Es un trastorno del estado de ánimo caracterizado por tristeza profunda, pérdida de interés, agotamiento, problemas de sueño y pensamientos negativos persistentes que interfieren con la vida diaria.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>Depresión leve, moderada y severa.</li>
+        <li>Depresión melancólica.</li>
+        <li>Depresión atípica.</li>
+        <li>Depresión con características psicóticas.</li>
+        <li>Depresión estacional.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Tristeza constante o vacío emocional.</li>
+        <li>Pérdida de interés en actividades.</li>
+        <li>Fatiga o falta de energía.</li>
+        <li>Cambios en apetito y sueño.</li>
+        <li>Sentimientos de culpa o inutilidad.</li>
+        <li>Lentitud motora o agitación.</li>
+        <li>Pensamientos suicidas en casos severos.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Alteraciones químicas cerebrales.</li>
+        <li>Estrés crónico o traumas.</li>
+        <li>Factores genéticos.</li>
+        <li>Enfermedades médicas o dolor crónico.</li>
+        <li>Consumo de sustancias.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se realiza mediante entrevistas clínicas, cuestionarios de depresión, historial médico y evaluación del funcionamiento emocional durante al menos dos semanas.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Antidepresivos ISRS y otros tipos.</li>
+        <li>Terapia cognitivo-conductual (TCC).</li>
+        <li>Terapia interpersonal.</li>
+        <li>Actividad física regular.</li>
+        <li>Mejora de hábitos de alimentación y sueño.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Hablar con personas de confianza.</li>
+        <li>Evitar el aislamiento.</li>
+        <li>Establecer rutinas diarias simples.</li>
+        <li>Practicar técnicas de relajación.</li>
+        <li>Metas pequeñas y alcanzables.</li>
+    </ul>
+
+    <hr>
+     <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 01.09.20_c8423aac.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 5.03.32 PM.jpeg" 
+        alt="Cartel informativo depresión" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 10.47.22 PM.mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+
+    <div id="pant_Borderline" class="pantalla">
+    <div class="detalle">
+            <h2>Trastorno de Ansiedad</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234801.png" 
+        alt="Ansiedad" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    La ansiedad es una respuesta natural del cuerpo ante el peligro, pero cuando es excesiva, persistente y difícil de controlar se convierte en un trastorno que afecta la vida diaria.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>Ansiedad generalizada.</li>
+        <li>Fobia social.</li>
+        <li>Fobias específicas.</li>
+        <li>Trastorno de pánico.</li>
+        <li>Agorafobia.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Preocupación constante.</li>
+        <li>Palpitaciones, sudoración o temblores.</li>
+        <li>Inquietud o tensión muscular.</li>
+        <li>Dificultad para concentrarse.</li>
+        <li>Dificultad para dormir.</li>
+        <li>Evitación de situaciones por miedo.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Genética.</li>
+        <li>Estrés crónico.</li>
+        <li>Traumas emocionales.</li>
+        <li>Problemas hormonales o médicos.</li>
+        <li>Consumo de sustancias.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se realiza mediante evaluación clínica, cuestionarios de ansiedad y análisis de síntomas presentes durante varios meses.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia cognitivo-conductual.</li>
+        <li>Técnicas de relajación y respiración.</li>
+        <li>Antidepresivos y ansiolíticos.</li>
+        <li>Mindfulness y meditación.</li>
+        <li>Ejercicio regular.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Evitar cafeína y bebidas energéticas.</li>
+        <li>Realizar actividades que relajen.</li>
+        <li>Crear rutinas de sueño saludables.</li>
+        <li>Hablar con amigos o familiares.</li>
+    </ul>
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 01.07.52_527c9550.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 8.49.52 PM.jpeg" 
+        alt="Cartel informativo ansiedad" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="ElevenLabs_Untitled_project.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+
+<div id="pant_Fobia" class="pantalla">
+<div class="detalle">
+    <h2>Trastorno Obsesivo–Compulsivo (TOC)</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234839.png" 
+        alt="TOC" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El TOC es un trastorno de ansiedad caracterizado por obsesiones (pensamientos repetitivos e intrusivos) y compulsiones (rituales o actos que la persona siente que debe realizar para reducir la ansiedad).</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>TOC de limpieza o contaminación.</li>
+        <li>TOC de verificación.</li>
+        <li>TOC de orden y simetría.</li>
+        <li>TOC de pensamientos intrusivos.</li>
+        <li>Acumulación compulsiva.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Pensamientos repetitivos no deseados.</li>
+        <li>Sentimientos de culpa o miedo irracional.</li>
+        <li>Rituales repetitivos (lavar, contar, verificar).</li>
+        <li>Dificultad para detener las compulsiones.</li>
+        <li>Ansiedad intensa si no se realizan los rituales.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Genética.</li>
+        <li>Alteraciones en serotonina.</li>
+        <li>Ambientes con alta presión emocional.</li>
+        <li>Perfeccionismo.</li>
+        <li>Eventos traumáticos.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se realiza mediante evaluación clínica, identificación de patrones obsesivos-compulsivos y análisis del impacto en la vida diaria.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia de exposición y prevención de respuesta (EPR).</li>
+        <li>Terapia cognitivo-conductual.</li>
+        <li>Antidepresivos ISRS.</li>
+        <li>Mindfulness para reducir pensamientos intrusivos.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Evitar rituales pequeños que refuercen el TOC.</li>
+        <li>Usar técnicas de respiración y atención plena.</li>
+        <li>Reducir estrés.</li>
+        <li>Registrar pensamientos y patrones compulsivos.</li>
+    </ul>
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 00.42.58_50322801.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-02 at 5.08.39 PM.jpeg" 
+        alt="Cartel informativo TOC" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 11.36.40 PM (1).mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+<!-- PANTALLAS DETALLADAS -->
+<div id="pant_Alimentarios" class="pantalla">
+<div class="detalle">
+    
+    <h2>Trastorno de la Conducta</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 235015.png" 
+        alt="Trastorno de la Conducta" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El trastorno de la conducta es un patrón persistente de comportamientos agresivos, desafiantes o que violan normas sociales. Suele presentarse en la infancia o adolescencia y puede interferir con la convivencia, el aprendizaje y el desarrollo personal.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>Trastorno de conducta infantil.</li>
+        <li>Trastorno de conducta adolescente.</li>
+        <li>Trastorno de conducta con emociones prosociales limitadas.</li>
+        <li>Trastorno de conducta tipo agresivo.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Ataques de enojo o agresividad.</li>
+        <li>Romper objetos o dañar propiedad.</li>
+        <li>Desobediencia grave.</li>
+        <li>Mentiras frecuentes.</li>
+        <li>Acoso o intimidación.</li>
+        <li>Fugas de casa o escuela.</li>
+        <li>Incumplimiento repetido de reglas.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Entornos familiares conflictivos.</li>
+        <li>Historia de abuso o negligencia.</li>
+        <li>Problemas emocionales no tratados.</li>
+        <li>Influencia de pares o ambientes violentos.</li>
+        <li>Trastornos neurológicos o impulsividad.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Incluye entrevistas con el menor y la familia, evaluación del comportamiento en diferentes entornos y análisis del historial emocional, académico y social.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia cognitivo-conductual.</li>
+        <li>Terapia familiar.</li>
+        <li>Programas de modificación de conducta.</li>
+        <li>Intervenciones escolares.</li>
+        <li>Entrenamiento en habilidades sociales.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Rutinas claras y límites firmes.</li>
+        <li>Refuerzo positivo.</li>
+        <li>Comunicación afectiva.</li>
+        <li>Supervisión adecuada.</li>
+        <li>Ambiente seguro y estructurado.</li>
+    </ul>
+
+    <hr>
+
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+      <video width="100%" height="315" controls>
+    <source src="Video de WhatsApp 2025-12-03 a las 01.07.04_2d422035.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="WhatsApp Image 2025-12-03 at 12.40.59 AM.jpeg" 
+        alt="Cartel informativo conducta" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 11.01.26 PM (3).mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+
+
+<div id="pant_TDAH" class="pantalla">
+<div class="detalle">
+    
+    <h2>Trastorno de Déficit de Atención e Hiperactividad (TDAH)</h2>
+
+    <!-- 🟦 IMAGEN PRINCIPAL DE LA ENFERMEDAD -->
+    <img 
+        src="Captura de pantalla 2025-12-02 234933.png" 
+        alt="TDAH" 
+        class="img-fluid mb-3" 
+    />
+
+    <p><strong>¿Qué es?</strong> 
+    El Trastorno de Déficit de Atención e Hiperactividad (TDAH) es un trastorno del neurodesarrollo que se caracteriza por dificultades para mantener la atención, impulsividad y niveles elevados de actividad. Usualmente se manifiesta en la infancia y puede continuar en la adolescencia y la adultez.</p>
+
+    <h3>Tipos comunes</h3>
+    <ul>
+        <li>TDAH con predominio de inatención.</li>
+        <li>TDAH con predominio de hiperactividad-impulsividad.</li>
+        <li>TDAH de tipo combinado.</li>
+    </ul>
+
+    <h3>Síntomas</h3>
+    <ul>
+        <li>Dificultad para concentrarse.</li>
+        <li>Olvido frecuente de tareas.</li>
+        <li>Impulsividad al hablar o actuar.</li>
+        <li>Inquietud constante.</li>
+        <li>Dificultad para seguir instrucciones.</li>
+        <li>Desorganización en actividades escolares.</li>
+        <li>Problemas para terminar tareas.</li>
+    </ul>
+
+    <h3>Causas y factores</h3>
+    <ul>
+        <li>Factores genéticos.</li>
+        <li>Alteraciones en neurotransmisores como la dopamina.</li>
+        <li>Exposición prenatal a sustancias.</li>
+        <li>Bajo peso al nacer.</li>
+        <li>Factores ambientales y sociales.</li>
+    </ul>
+
+    <h3>Diagnóstico</h3>
+    <p>Se realiza mediante la evaluación clínica por un especialista, observación del comportamiento en distintos contextos (escuela, casa), entrevistas con padres y maestros, y aplicación de cuestionarios psicológicos.</p>
+
+    <h3>Tratamiento</h3>
+    <ul>
+        <li>Terapia conductual.</li>
+        <li>Psicoeducación para padres y alumnos.</li>
+        <li>Estrategias de organización y estudio.</li>
+        <li>Medicamentos estimulantes bajo supervisión médica.</li>
+        <li>Apoyo escolar especializado.</li>
+    </ul>
+
+    <h3>Estrategias de autocuidado</h3>
+    <ul>
+        <li>Establecer rutinas diarias.</li>
+        <li>Uso de recordatorios y agendas.</li>
+        <li>Realizar actividad física diariamente.</li>
+        <li>Dividir las tareas en pasos pequeños.</li>
+        <li>Refuerzo positivo de logros.</li>
+    </ul>
+
+    <hr>
+    <!-- 🎬 VIDEO RECOMENDADO -->
+    <h3>Video recomendado</h3>
+
+    <video width="100%" height="315" controls>
+       <source src="WhatsApp Video 2025-12-03 at 12.42.24 AM.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    
+
+    <hr>
+
+    <!-- 🖼 CARTEL / IMAGEN EXTRA -->
+    <h3>Cartel informativo</h3>
+    <img 
+        src="c:\Users\mitzi\Downloads\WhatsApp Image 2025-12-02 at 8.31.56 PM.jpeg" 
+        alt="Cartel informativo" 
+        class="img-fluid mb-3"
+    />
+
+    <hr>
+
+    <!-- 🎧 AUDIO / PODCAST -->
+    <h3>Podcast recomendado</h3>
+    <audio controls>
+        <source src="WhatsApp Audio 2025-12-02 at 11.36.40 PM.mp4" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <hr>
+
+    <button class="btn btn-secondary mt-4" onclick="volver('pantallaEnfermedades')">Volver</button>
+
+</div>
+</div>
+<!-- CARRUSEL DE IMÁGENES -->
+<div id="pant_Carrusel" class="pantalla">
+    <div class="container mt-4">
+
+        <h3 class="text-center mb-3">Carrusel de imágenes</h3>
+
+        <div id="carouselTEPT" class="carousel slide mb-4" data-bs-ride="carousel">
+
+            <!-- INDICADORES -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="5"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="6"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="7"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="8"></button>
+                <button type="button" data-bs-target="#carouselTEPT" data-bs-slide-to="9"></button>
+            </div>
+
+            <!-- IMÁGENES -->
+            <div class="carousel-inner rounded">
+
+                <div class="carousel-item active">
+                    <img src="Captura de pantalla 2025-12-03 021833.png" class="d-block w-100" alt="Imagen 1">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 021926.png" class="d-block w-100" alt="Imagen 2">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022058.png" class="d-block w-100" alt="Imagen 3">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022159.png" class="d-block w-100" alt="Imagen 4">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022242.png" class="d-block w-100" alt="Imagen 5">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022322.png" class="d-block w-100" alt="Imagen 6">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022406.png" class="d-block w-100" alt="Imagen 7">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022534.png" class="d-block w-100" alt="Imagen 8">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022622.png" class="d-block w-100" alt="Imagen 9">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="Captura de pantalla 2025-12-03 022711.png" class="d-block w-100" alt="Imagen 10">
+                </div>
+
+            </div>
+
+            <!-- BOTONES DE CONTROL (flechas grandes y visibles) -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselTEPT" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselTEPT" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
+
+        <button class="btn btn-secondary" onclick="volver('info')">Volver</button>
+
+    </div>
+</div>
+<!-- PANTALLA DEL CUESTIONARIO -->
+<div id="pant_Cuestionario" class="pantalla">
+    <div class="container mt-4">
+
+        <h2 class="text-center mb-4">Cuestionario de Salud Mental</h2>
+
+        <form id="formCuestionario">
+
+            <ol>
+
+                <li>¿Qué es el TEPT?
+                    <br><input type="radio" name="p1" value="correcta"> B) Trastorno después de un evento traumático
+                    <br><input type="radio" name="p1"> A) Trastorno por dificultades escolares
+                    <br><input type="radio" name="p1"> C) Trastorno por mala alimentación
+                </li><br>
+
+                <li>¿Cuál es un síntoma común del TLP?
+                    <br><input type="radio" name="p2" value="correcta"> A) Miedo intenso al abandono
+                    <br><input type="radio" name="p2"> B) Pérdida total de memoria
+                    <br><input type="radio" name="p2"> C) Problemas del habla
+                </li><br>
+
+                <li>El trastorno de pánico se caracteriza por:
+                    <br><input type="radio" name="p3" value="correcta"> B) Ataques repentinos de miedo intenso
+                    <br><input type="radio" name="p3"> A) Episodios de enojo
+                    <br><input type="radio" name="p3"> C) Conductas compulsivas
+                </li><br>
+
+                <li>La manía es parte de:
+                    <br><input type="radio" name="p4" value="correcta"> B) Trastorno Bipolar
+                    <br><input type="radio" name="p4"> A) Depresión mayor
+                    <br><input type="radio" name="p4"> C) TDAH
+                </li><br>
+
+                <li>¿Qué es común en la esquizofrenia?
+                    <br><input type="radio" name="p5" value="correcta"> A) Alucinaciones
+                    <br><input type="radio" name="p5"> B) Aumento de apetito
+                    <br><input type="radio" name="p5"> C) Aumento de energía
+                </li><br>
+
+                <li>¿Cuál es un síntoma de la depresión mayor?
+                    <br><input type="radio" name="p6" value="correcta"> B) Tristeza profunda
+                    <br><input type="radio" name="p6"> A) Euforia constante
+                    <br><input type="radio" name="p6"> C) Ataques de pánico
+                </li><br>
+
+                <li>La ansiedad es:
+                    <br><input type="radio" name="p7" value="correcta"> A) Miedo normal exagerado y persistente
+                    <br><input type="radio" name="p7"> B) Problemas para leer
+                    <br><input type="radio" name="p7"> C) Un trastorno físico
+                </li><br>
+
+                <li>El TOC se caracteriza por:
+                    <br><input type="radio" name="p8" value="correcta"> B) Obsesiones y compulsiones
+                    <br><input type="radio" name="p8"> A) Alucinaciones visuales
+                    <br><input type="radio" name="p8"> C) Episodios depresivos
+                </li><br>
+
+                <li>El trastorno de la conducta incluye:
+                    <br><input type="radio" name="p9" value="correcta"> B) Agresividad y violar reglas
+                    <br><input type="radio" name="p9"> A) Aislamiento extremo
+                    <br><input type="radio" name="p9"> C) Problemas de visión
+                </li><br>
+
+                <li>El TDAH afecta principalmente:
+                    <br><input type="radio" name="p10" value="correcta"> B) La atención y la impulsividad
+                    <br><input type="radio" name="p10"> A) El apetito
+                    <br><input type="radio" name="p10"> C) La memoria a largo plazo
+                </li><br>
+
+                <li>Un síntoma de TEPT es:
+                    <br><input type="radio" name="p11" value="correcta"> A) Flashbacks del evento traumático
+                    <br><input type="radio" name="p11"> B) Temblor en las manos
+                    <br><input type="radio" name="p11"> C) Problemas de matemáticas
+                </li><br>
+
+                <li>Una característica del TLP es:
+                    <br><input type="radio" name="p12" value="correcta"> B) Autoimagen cambiante
+                    <br><input type="radio" name="p12"> A) Evitar a todas las personas
+                    <br><input type="radio" name="p12"> C) Problemas respiratorios
+                </li><br>
+
+                <li>En el trastorno de pánico es común:
+                    <br><input type="radio" name="p13" value="correcta"> A) Palpitaciones fuertes
+                    <br><input type="radio" name="p13"> B) Hablar muy rápido
+                    <br><input type="radio" name="p13"> C) Comer compulsivamente
+                </li><br>
+
+                <li>La esquizofrenia afecta principalmente:
+                    <br><input type="radio" name="p14" value="correcta"> A) La percepción de la realidad
+                    <br><input type="radio" name="p14"> B) La digestión
+                    <br><input type="radio" name="p14"> C) Las habilidades deportivas
+                </li><br>
+
+                <li>Las compulsiones del TOC son:
+                    <br><input type="radio" name="p15" value="correcta"> A) Rituales repetitivos
+                    <br><input type="radio" name="p15"> B) Parálisis muscular
+                    <br><input type="radio" name="p15"> C) Episodios de euforia
+                </li><br>
+
+                <li>Un síntoma de depresión mayor es:
+                    <br><input type="radio" name="p16" value="correcta"> B) Pérdida de interés
+                    <br><input type="radio" name="p16"> A) Exceso de energía
+                    <br><input type="radio" name="p16"> C) Hablar muy rápido
+                </li><br>
+
+                <li>En el trastorno bipolar, la hipomanía es:
+                    <br><input type="radio" name="p17" value="correcta"> A) Energía anormalmente alta
+                    <br><input type="radio" name="p17"> B) Falta total de motivación
+                    <br><input type="radio" name="p17"> C) Problemas cardíacos
+                </li><br>
+
+                <li>La ansiedad puede provocar:
+                    <br><input type="radio" name="p18" value="correcta"> A) Preocupación constante
+                    <br><input type="radio" name="p18"> B) Hambre excesiva
+                    <br><input type="radio" name="p18"> C) Visión doble
+                </li><br>
+
+                <li>En el TDAH es común:
+                    <br><input type="radio" name="p19" value="correcta"> A) Impulsividad
+                    <br><input type="radio" name="p19"> B) Delirios
+                    <br><input type="radio" name="p19"> C) Alucinaciones auditivas
+                </li><br>
+
+                <li>El trastorno de conducta suele incluir:
+                    <br><input type="radio" name="p20" value="correcta"> A) Actos agresivos
+                    <br><input type="radio" name="p20"> B) Desorientación total
+                    <br><input type="radio" name="p20"> C) Sueño excesivo
+                </li><br>
+
+            </ol>
+
+            <button type="button" class="btn btn-primary" onclick="calificar()">Calificar</button>
+
+        </form>
+
+        <!-- Aquí aparece el resultado -->
+        <h3 id="resultado" class="text-center mt-3"></h3>
+
+        <button class="btn btn-secondary mt-3" onclick="volver('info')">Volver</button>
+
+</div>
+</div>
+
+
+
+<!-- BOOTSTRAP JS (NECESARIO PARA QUE FUNCIONE EL CARRUSEL) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- CSS EXTRA PARA HACER LAS FLECHAS MÁS GRANDES Y VISIBLES -->
+<style>
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);               /* flechas blancas */
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.carousel-control-prev span,
+.carousel-control-next span {
+    background-color: rgba(0,0,0,0.45); /* fondo oscuro detrás de la flecha */
+    padding: 20px;
+    border-radius:50%;
+}
+</style>
+    <!-- SCRIPT -->
+    <script>
+        function mostrar(id){
+            document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('mostrar'));
+            document.getElementById(id).classList.add('mostrar');
+        }
+
+        function volver(id){
+            mostrar(id);
+        }
+
+        document.getElementById("btnComenzar").onclick = () => mostrar("info");
+        document.getElementById("btnEnfermedades").onclick = () => mostrar("pantallaEnfermedades");
+        document.getElementById("btnCarrusel").onclick = () => mostrar("pant_Carrusel");
+        document.getElementById("btnCuestionario").onclick = () => mostrar("pant_Cuestionario");
+
+        document.querySelectorAll(".enfermedad-card").forEach(card=>{
+            card.onclick = ()=>{
+                mostrar(card.dataset.target);
+            };
+        });
+        function calificar() {
+    let correctas = 0;
+    let total = 20;
+
+    for (let i = 1; i <= total; i++) {
+        let seleccionada = document.querySelector(`input[name="p${i}"]:checked`);
+        if (seleccionada && seleccionada.value === "correcta") {
+            correctas++;
+        }
+    }
+
+    let incorrectas = total - correctas;
+
+    document.getElementById("resultado").innerHTML = `
+        Respuestas correctas: <b>${correctas}</b><br>
+        Respuestas incorrectas: <b>${incorrectas}</b>
+    `;
+}
+
+    </script>
+
+</body>
+</html>
